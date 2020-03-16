@@ -9,22 +9,22 @@
 </head>
 <body>
     <div style = "margin-top: 100px;" class="container">
-        <h3>Todo List</h3>
+        <h3>Yapılacaklar Listesi</h3>
         <hr>
 
         <form action="/add" method ="POST">
             <div class="form-group">
-                <label for="exampleInputEmail1">Todo Başlık</label>
-                <input type="text" class="form-control" name = "title" id="formGroupExampleInput"  placeholder="ToDo Giriniz...">
+                <label for="exampleInputEmail1"></label>
+                <input type="text" class="form-control" name = "title" id="formGroupExampleInput"  placeholder="Kaydetmek İstediğiniz Başlığı Giriniz...">
                 <br>
-                <button type="submit" class="btn btn-danger">Ekle</button>
+                <button type="submit" class="btn btn-success btn-block">Ekle</button>
             </div>
             <hr>
         </form>
 
         {% if todos == [] %}
         <div class="alert alert-warning" role="alert">
-            Herhangi bir Todonuz bulunmuyor!
+            Herhangi bir Hatırlatmanız bulunmuyor!
         </div>       
         
         {% else %}
@@ -32,10 +32,10 @@
             <thead>
               <tr>
                 <th scope="col">id</th>
-                <th scope="col">Todo Başlık</th>
-                <th scope="col">Todo Durum</th>
-                <th scope="col">Durum Güncelle</th>
-                <th scope="col">Todo Sil</th>
+                <th scope="col">Hatırlatma Başlığı</th>
+                <th scope="col">Durum Takibi</th>
+                <th scope="col">Hatırlatma Yapıldı mı?</th>
+                <th scope="col">Hatırlatmayı Sil</th>
               </tr>
             </thead>
             <tbody>
@@ -44,12 +44,19 @@
                     <th scope="row">{{todo.id}}</th>
                     <td>{{todo.title}}</td>
                     {% if todo.complete == False %}
-                    <td>Tamamlanmadı</td>
+                    <td>Devam Ediyor!!!</td>
                     {% else %}
                     <td>Tamamlandı</td>
                     {% endif %}
-                    <td><a href="/complete/{{todo.id}}" class="btn btn-danger">Tamamla</a></td>
-                    <td><a href="/delete/{{todo.id}}" class="btn btn-danger">Sil</a></td>
+
+
+                    {% if todo.complete == False %}
+                    <td><a href="/complete/{{todo.id}}" class="btn btn-success btn-block">Tamamla</a></td>
+                    {% else %}
+                    <td><a href="/complete/{{todo.id}}" class="btn btn-warning btn-block">Devam Et</a></td>
+                    {% endif %}        
+                    
+                    <td><a href="/delete/{{todo.id}}" class="btn btn-danger btn-block">Sil</a></td>
                 </tr>
                 {% endfor %}
             </tbody>
